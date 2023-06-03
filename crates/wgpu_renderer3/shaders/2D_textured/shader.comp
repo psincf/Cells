@@ -1,0 +1,92 @@
+#version 460
+
+struct Vertex {
+    int position_x;
+    int position_y;
+    int position_z;
+    float texture_pos_x;
+    float texture_pos_y;
+    float texture_pos_z;
+};
+
+struct DrawableEntity {
+    int position_min_x;
+    int position_min_y;
+    int position_max_x;
+    int position_max_y;
+    int position_z;
+    float texture_min_x;
+    float texture_min_y;
+    float texture_max_x;
+    float texture_max_y;
+    float texture_z;
+};
+
+layout ( binding = 0 ) buffer input_entities {    
+    DrawableEntity[] entities;
+};
+
+layout ( binding = 1 ) buffer output_vertex {
+    Vertex[] vertex;
+};
+
+void vertex_6_textured(in int i) {
+
+    DrawableEntity entity = entities[i];
+
+    int position_min_x = entity.position_min_x;
+    int position_min_y = entity.position_min_y;
+    int position_max_x = entity.position_max_x;
+    int position_max_y = entity.position_max_y;
+    int position_z = entity.position_z;
+    float texture_min_x = entity.texture_min_x;
+    float texture_min_y = entity.texture_min_y;
+    float texture_max_x = entity.texture_max_x;
+    float texture_max_y = entity.texture_max_y;
+    float texture_z = entity.texture_z;
+    
+    /*
+    int position_min_x = 0;
+    int position_min_y = 0;
+    int position_max_x = 1;
+    int position_max_y = 1;
+    int position_z = i;
+    float texture_min_x = 0;
+    float texture_min_y = 0;
+    float texture_max_x = 0.1;
+    float texture_max_y = 0.1;
+    float texture_z = 0;
+    */
+    
+
+    vertex[6 * i] = Vertex(
+        position_min_x, position_min_y, position_z,
+        texture_min_x, texture_min_y, texture_z
+    );
+    vertex[6 * i + 1] = Vertex(
+        position_min_x, position_max_y, position_z,
+        texture_min_x, texture_max_y, texture_z
+    );
+    vertex[6 * i + 2] = Vertex(
+        position_max_x, position_max_y, position_z,
+        texture_max_x, texture_max_y, texture_z
+    );
+    vertex[6 * i + 3] = Vertex(
+        position_max_x, position_max_y, position_z,
+        texture_max_x, texture_max_y, texture_z
+    );
+    vertex[6 * i + 4] = Vertex(
+        position_min_x, position_min_y, position_z,
+        texture_min_x, texture_min_y, texture_z
+    );
+    vertex[6 * i + 5] = Vertex(
+        position_max_x, position_min_y, position_z,
+        texture_max_x, texture_min_y, texture_z
+    );
+}
+
+void main() {
+    int i = int(gl_GlobalInvocationID.x);
+    vertex_6_textured(i);
+}
+

@@ -1,0 +1,20 @@
+[package]
+name = "egui_binding"
+version = "0.1.0"
+authors = [""]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["wgpu_7"]
+wgpu_6 = ["wgpu_v6"]
+wgpu_7 = ["wgpu_v7"]
+
+[dependencies]
+egui = "0.10"
+euclid = "*"
+input_events = { path = "../input_events_2" }
+wgpu_v6 = { package = "wgpu", version = "0.6", optional = true }
+wgpu_v7 = { package = "wgpu", version = "0.7", optional = true }
+winit = "0.24"

@@ -1,0 +1,27 @@
+[package]
+name = "reflect"
+version = "0.1.0"
+authors = [""]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["imgui_impl", "egui_impl", "euclid_reflect"]
+imgui_impl = ["imgui"]
+egui_impl = ["egui"]
+version_2 = []
+euclid_reflect = ["euclid"]
+
+[dependencies]
+reflect_derive = { path = "reflect_derive" }
+egui = { version = "0.10", optional = true }
+imgui = { version = "0.7", optional = true }
+serde = "1"
+
+euclid = { version = "*", optional = true }
+
+
+
+#serde-name = "0.1.1"
+#serde-reflection = "0.3.2"
